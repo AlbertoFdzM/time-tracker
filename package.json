@@ -1,0 +1,18 @@
+{
+  "name": "time-tracker",
+  "version": "0.0.0",
+  "description": "Time tracking tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "time",
+    "tack",
+    "tracking",
+    "timer",
+    "time-tracker"
+  ],
+  "author": "Alberto Fernandez <albertofdzm@gmail.com>",
+  "license": "MIT"
+}
