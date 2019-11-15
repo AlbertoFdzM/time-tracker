@@ -14,5 +14,8 @@
     "time-tracker"
   ],
   "author": "Alberto Fernandez <albertofdzm@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^7.1.1"
+  }
 }
