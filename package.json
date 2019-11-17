@@ -16,6 +16,8 @@
   "author": "Alberto Fernandez <albertofdzm@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^7.1.1"
+    "electron": "^7.1.1",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.2"
   }
 }

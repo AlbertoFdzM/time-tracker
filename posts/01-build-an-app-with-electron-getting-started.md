@@ -1,19 +1,12 @@
 # Build an App with Electron and TypeScript - Getting Started
 
-First, install TypeScript globaly to have access to TypeScript CLI
-
-```bash
-npm i -g typescript
-```
-<small>_**Note:** same as `npm install --global typescript`_</small>
-
-Then, in the project's directory:
+First, install TypeScript in the project's directory:
 ```bash
 npm i -D typescript
 ```
 <small>_**Note:** same as `npm install --save-dev typescript`_</small>
 
-Now a `tsconfig.json` can be created:
+**`/tsconfig.json`**
 ```json
 {
   "compilerOptions": {
@@ -41,6 +34,19 @@ Now a `tsconfig.json` can be created:
 }
 ```
 <small>_*Note:* [TypeScript config documentation](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)_</small>
+
+TSLint will help to maintain code style:
+```bash
+npm i -D tslint
+```
+
+**`/tslint.json`**
+```json
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"]
+}
+```
 
 Time to install Electron:
 ```bash
