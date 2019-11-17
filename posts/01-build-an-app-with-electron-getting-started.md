@@ -57,8 +57,13 @@ Create an `App` class.
 
 **`/src/App.ts`**
 ```typescript
+import path from "path";
 import { BrowserWindow } from "electron";
+
 export class App {
+  /**
+   * @description callback for Electron.App "ready" event
+   */
   public onReady(): void {
     const options: Electron.BrowserWindowConstructorOptions = {
       height: 600,
@@ -70,14 +75,15 @@ export class App {
 
     const window = new BrowserWindow(options);
 
-    window.loadFile("index.html");
+    window.loadFile(path.join(__dirname, "../index.html"));
   }
 }
+
 ```
 
 And a HTML file to render the app.
 
-**`src/index.html`**
+**`/src/index.html`**
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -94,4 +100,39 @@ And a HTML file to render the app.
     and Electron <script>document.write(process.versions.electron)</script>.
   </body>
 </html>
+```
+
+And a NodeJS script to run it:
+**`/src/bin/main.ts`**
+```typescript
+import Electron from "electron";
+
+import { App } from "./App";
+
+const app = new App();
+
+Electron.app.on("ready", app.onReady);
+
+```
+
+Update package with build and start scripts.
+ 
+**`package.json`**
+```json
+{
+  // ...
+  "main": "dist/bin/main.js",
+  "scripts": {
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "electron .",
+    // ...
+  },
+  //...
+}
+```
+
+And try it:
+```bash
+npm start
 ```

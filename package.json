@@ -2,8 +2,11 @@
   "name": "time-tracker",
   "version": "0.0.0",
   "description": "Time tracking tool",
-  "main": "index.js",
+  "main": "dist/bin/main.js",
   "scripts": {
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
