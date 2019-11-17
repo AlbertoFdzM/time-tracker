@@ -41,3 +41,8 @@ Now a `tsconfig.json` can be created:
 }
 ```
 <small>_*Note:* [TypeScript config documentation](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)_</small>
+
+Time to install Electron:
+```bash
+npm i -D electron
+```
