@@ -136,3 +136,6 @@ And try it:
 ```bash
 npm start
 ```
+
+The App should start running with something like this:
+![Typescript and Electron App running](./img/typescript-electron-app-running.png)
