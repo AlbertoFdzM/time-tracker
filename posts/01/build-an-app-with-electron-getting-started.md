@@ -19,7 +19,10 @@ Create a [TypeScript config file](https://www.typescriptlang.org/docs/handbook/t
 {
   "compilerOptions": {
     "incremental": true,
-    "target": "es6",
+    "target": "es2018",
+    "lib": [
+      "es2018"
+    ],
     "module": "commonjs",
     "declaration": true,
     "declarationMap": true,
@@ -42,21 +45,7 @@ Create a [TypeScript config file](https://www.typescriptlang.org/docs/handbook/t
 }
 ```
 
-Install [TSLint](https://palantir.github.io/tslint/), it will help to maintain code style:
-```bash
-npm i -D tslint
-```
-
-And create its config file.
-**`/tslint.json`**
-```json
-{
-  "defaultSeverity": "error",
-  "extends": ["tslint:recommended"]
-}
-```
-
-Time to install [Electron](https://electronjs.org/):
+Install [Electron](https://electronjs.org/):
 ```bash
 npm i -P electron
 ```
@@ -72,7 +61,7 @@ The `App` class will be the main module for the project, for now it will only op
 
 **`/src/App.ts`**
 ```typescript
-import Electron from "electron";
+import Electron from 'electron';
 
 /**
  * Main module for the project
@@ -82,14 +71,13 @@ export class App {
    * Starts the app
    */
   public start(): void {
-    Electron.app.on("ready", this.onReady);
+    Electron.app.on('ready', this.onReady);
   }
 
   /**
-   * Callback for Electron.App "ready" event
+   * Callback for Electron.App 'ready' event
    */
   private onReady(): void {
-    // tslint:disable-next-line: no-unused-expression
     new Electron.BrowserWindow();
   }
 }
@@ -100,9 +88,9 @@ Now to use this module a good practice is to have an executable Node script that
 
 **`/src/bin/start.ts`**
 ```typescript
-import { App } from "./App";
+import { App } from './App';
 
-const app: App = new App();
+const app = new App();
 app.start();
 ```
 
@@ -115,7 +103,6 @@ Update package with build and start scripts.
   "main": "dist/bin/start.js",
   "scripts": {
     "build": "tsc",
-    "prebuild": "tslint --project tsconfig.json",
     "prestart": "npm run build",
     "start": "electron .",
     // ...
@@ -156,18 +143,19 @@ Create a basic HTML file:
 Update `App` imports and `App.onReady` method:
 **`/src/App.ts`**
 ```typescript
-import Electron from "electron";
-import path from "path"; // NodeJS path module
+import Electron from 'electron';
+import path from 'path'; // NodeJS path module
 
 // ...
 export class App {
   // ...
   private async onReady(): Promise<void> {
-    const window: Electron.BrowserWindow = new Electron.BrowserWindow();
+    const window = new Electron.BrowserWindow();
 
-    await window.loadFile(path.join(__dirname, "../index.html"));
+    await window.loadFile(path.join(__dirname, '../index.html'));
   }
 }
+
 ```
 
 Now if the app starts:
@@ -189,13 +177,13 @@ export class App {
   private async onReady(): Promise<void> {
     const options: Electron.BrowserWindowConstructorOptions = {
       webPreferences: {
-        nodeIntegration: true,
-      },
+        nodeIntegration: true
+      }
     };
 
-    const window: Electron.BrowserWindow = new Electron.BrowserWindow(options);
+    const window = new Electron.BrowserWindow(options);
 
-    await window.loadFile(path.join(__dirname, "../index.html"));
+    await window.loadFile(path.join(__dirname, '../index.html'));
   }
 }
 ```

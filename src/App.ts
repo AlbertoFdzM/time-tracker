@@ -1,5 +1,5 @@
-import Electron from "electron";
-import path from "path"; // NodeJS path module
+import Electron from 'electron';
+import path from 'path'; // NodeJS path module
 
 /**
  * Main module for the project
@@ -9,7 +9,7 @@ export class App {
    * Starts the app
    */
   public start(): void {
-    Electron.app.on("ready", this.onReady.bind(this));
+    Electron.app.on('ready', this.onReady.bind(this));
   }
 
   /**
@@ -18,12 +18,12 @@ export class App {
   private async onReady(): Promise<void> {
     const options: Electron.BrowserWindowConstructorOptions = {
       webPreferences: {
-        nodeIntegration: true,
-      },
+        nodeIntegration: true
+      }
     };
 
-    const window: Electron.BrowserWindow = new Electron.BrowserWindow(options);
+    const window = new Electron.BrowserWindow(options);
 
-    await window.loadFile(path.join(__dirname, "../index.html"));
+    await window.loadFile(path.join(__dirname, '../index.html'));
   }
 }
