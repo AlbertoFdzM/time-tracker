@@ -2,7 +2,7 @@
   "name": "time-tracker",
   "version": "0.0.0",
   "description": "Time tracking tool",
-  "main": "dist/bin/main.js",
+  "main": "dist/bin/start.js",
   "scripts": {
     "build": "tsc",
     "prebuild": "tslint --project tsconfig.json",

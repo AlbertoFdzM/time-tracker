@@ -2,28 +2,28 @@ import Electron from "electron";
 import path from "path"; // NodeJS path module
 
 /**
- * @description Main module for the project
+ * Main module for the project
  */
 export class App {
   /**
-   * @description starts the app
+   * Starts the app
    */
   public start(): void {
-    Electron.app.on("ready", this.onReady);
+    Electron.app.on("ready", this.onReady.bind(this));
   }
 
   /**
-   * @description callback for Electron.App "ready" event
+   * Callback for Electron.App "ready" event
    */
-  private onReady(): void {
+  private async onReady(): Promise<void> {
     const options: Electron.BrowserWindowConstructorOptions = {
       webPreferences: {
         nodeIntegration: true,
       },
     };
 
-    const window = new Electron.BrowserWindow(options);
+    const window: Electron.BrowserWindow = new Electron.BrowserWindow(options);
 
-    window.loadFile(path.join(__dirname, "../index.html"));
+    await window.loadFile(path.join(__dirname, "../index.html"));
   }
 }

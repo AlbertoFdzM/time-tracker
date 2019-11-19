@@ -58,8 +58,9 @@ And create its config file.
 
 Time to install [Electron](https://electronjs.org/):
 ```bash
-npm i -D electron
+npm i -P electron
 ```
+<small>_**Note:** same as `npm install --save-prod electron`_</small>
 
 ## Develop
 
@@ -73,20 +74,23 @@ The `App` class will be the main module for the project, for now it will only op
 ```typescript
 import Electron from "electron";
 
+/**
+ * Main module for the project
+ */
 export class App {
   /**
-   * @description starts the app
+   * Starts the app
    */
   public start(): void {
     Electron.app.on("ready", this.onReady);
   }
 
   /**
-   * @description callback for Electron.App "ready" event
+   * Callback for Electron.App "ready" event
    */
   private onReady(): void {
     // tslint:disable-next-line: no-unused-expression
-    new BrowserWindow();
+    new Electron.BrowserWindow();
   }
 }
 
@@ -94,11 +98,11 @@ export class App {
 
 Now to use this module a good practice is to have an executable Node script that runs it, they are usually placed in a `bin/` directory.
 
-**`/src/bin/main.ts`**
+**`/src/bin/start.ts`**
 ```typescript
 import { App } from "./App";
 
-const app = new App();
+const app: App = new App();
 app.start();
 ```
 
@@ -108,9 +112,10 @@ Update package with build and start scripts.
 ```json
 {
   // ...
-  "main": "dist/bin/main.js",
+  "main": "dist/bin/start.js",
   "scripts": {
     "build": "tsc",
+    "prebuild": "tslint --project tsconfig.json",
     "prestart": "npm run build",
     "start": "electron .",
     // ...
@@ -157,10 +162,10 @@ import path from "path"; // NodeJS path module
 // ...
 export class App {
   // ...
-  private onReady(): void {
-    const window = new Electron.BrowserWindow();
+  private async onReady(): Promise<void> {
+    const window: Electron.BrowserWindow = new Electron.BrowserWindow();
 
-    window.loadFile(path.join(__dirname, "../index.html"));
+    await window.loadFile(path.join(__dirname, "../index.html"));
   }
 }
 ```
@@ -181,16 +186,16 @@ Update `App.onReady` method
 //...
 export class App {
   //...
-  private onReady(): void {
+  private async onReady(): Promise<void> {
     const options: Electron.BrowserWindowConstructorOptions = {
       webPreferences: {
         nodeIntegration: true,
       },
     };
 
-    const window = new Electron.BrowserWindow(options);
+    const window: Electron.BrowserWindow = new Electron.BrowserWindow(options);
 
-    window.loadFile(path.join(__dirname, "../index.html"));
+    await window.loadFile(path.join(__dirname, "../index.html"));
   }
 }
 ```
@@ -217,3 +222,8 @@ Update `index.html` file
 
 When App starts:
 ![Electron App with NodeJS integration](./img/03-electron-app-with-node-integration.png)
+
+And some debugging tools for Electron ([`devtron`](https://github.com/electron-userland/devtron) and [`electron-debug`](https://github.com/sindresorhus/electron-debug)).
+```bash
+npm i -D devtron electron-debug
+```
