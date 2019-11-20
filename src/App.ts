@@ -1,10 +1,13 @@
 import Electron from 'electron';
 import path from 'path'; // NodeJS path module
+import { AppConfig } from './AppConfig';
 
 /**
  * Main module for the project
  */
 export class App {
+  constructor(private config: AppConfig) {}
+
   /**
    * Starts the app
    */

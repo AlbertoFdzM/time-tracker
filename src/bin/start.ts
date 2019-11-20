@@ -1,4 +1,10 @@
 import { App } from '../App';
+import { AppConfig } from '../AppConfig';
 
-const app = new App();
+const isDebugEnabled = /--debug/.test(process.argv[1]);
+const config: AppConfig = {
+  isDebugEnabled
+};
+
+const app = new App(config);
 app.start();
