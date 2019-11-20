@@ -211,7 +211,84 @@ Update `index.html` file
 When App starts:
 ![Electron App with NodeJS integration](./img/03-electron-app-with-node-integration.png)
 
-And some debugging tools for Electron ([`devtron`](https://github.com/electron-userland/devtron) and [`electron-debug`](https://github.com/sindresorhus/electron-debug)).
+## Debugging and AppConfig
+
+There are some debugging tools for Electron ([`devtron`](https://github.com/electron-userland/devtron) and [`electron-debug`](https://github.com/sindresorhus/electron-debug)).
 ```bash
 npm i -D devtron electron-debug
 ```
+
+To activate this debugging tools some short of config object will be needed by `App` module:
+**`/src/AppConfig.ts`**
+```typescript
+/**
+ * App module configuration
+ */
+export interface AppConfig {
+  /**
+   * Enables debugging tools
+   */
+  isDebugEnabled: boolean;
+}
+
+```
+
+**`/src/App.ts`**
+```typescript
+//...
+
+import { AppConfig } from './AppConfig';
+import ElectronDebug from 'electron-debug';
+
+// ...
+
+class App {
+
+  constructor (private config: AppConfig) {}
+
+  public start(): void {
+    if (this.config.isDebugEnabled) {
+      const electronDebug: typeof ElectronDebug = require('electron-debug');
+
+      electronDebug();
+    }
+
+    // ...
+  }
+
+  // ...
+
+}
+```
+
+`AppConfig` can be created before instantiating the `App` module in the `start` script:
+**`/src/bin/start.ts`**
+```typescript
+import { App } from '../App';
+import { AppConfig } from '../AppConfig';
+
+const isDebugEnabled = process.env.DEBUG_ENABLED === 'true';
+const config: AppConfig = {
+  isDebugEnabled
+};
+
+const app = new App(config);
+app.start();
+```
+
+Now the `start` script needs to receive this value through environment variables.
+**`/package.json`**
+```json
+{
+  // ...
+  "scripts": {
+    // ...
+    "start": "DEBUG_ENABLED=true electron .",
+    // ...
+  }
+  // ...
+}
+```
+
+When `electron-debug` is activated will detect `devtron` and activates it too. Now when the Electron app starts, it will have the devtools panel open and a "Devtron" tab in it:
+![Electron App with devtools open using Devtron](./img/04-electron-app-with-devtools-open-using-devtron.png)

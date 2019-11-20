@@ -1,7 +1,7 @@
 import { App } from '../App';
 import { AppConfig } from '../AppConfig';
 
-const isDebugEnabled = /--debug/.test(process.argv[1]);
+const isDebugEnabled = process.env.DEBUG_ENABLED === 'true';
 const config: AppConfig = {
   isDebugEnabled
 };

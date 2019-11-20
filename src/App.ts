@@ -1,5 +1,6 @@
 import Electron from 'electron';
 import path from 'path'; // NodeJS path module
+import ElectronDebug from 'electron-debug';
 import { AppConfig } from './AppConfig';
 
 /**
@@ -12,6 +13,12 @@ export class App {
    * Starts the app
    */
   public start(): void {
+    if (this.config.isDebugEnabled) {
+      const electronDebug: typeof ElectronDebug = require('electron-debug');
+
+      electronDebug();
+    }
+
     Electron.app.on('ready', this.onReady.bind(this));
   }
 
