@@ -1,5 +1,8 @@
 # Build an App with Electron and TypeScript - Getting Started
 
+This article is part of a [post series about developing apps with Electron and TypeScript](https://github.com/AlbertoFdzM/time-tracker) and covers how to start a project, first steps and how to enable debugging.
+
+
 ## Requirements
 
 The environment/machine needs to have installed [NodeJS](https://nodejs.org/) v12 or higher.
@@ -292,3 +295,10 @@ Now the `start` script needs to receive this value through environment variables
 
 When `electron-debug` is activated will detect `devtron` and activates it too. Now when the Electron app starts, it will have the devtools panel open and a "Devtron" tab in it:
 ![Electron App with devtools open using Devtron](./img/04-electron-app-with-devtools-open-using-devtron.png)
+
+
+## Closure
+
+This are the basic steps to start developing with Electron with TypeScript.
+
+All the generated code of this post can be found on [GitHub AlbertoFdzM/time-tracker repository](https://github.com/AlbertoFdzM/time-tracker/tree/post/01).
