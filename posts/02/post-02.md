@@ -22,6 +22,7 @@ class App {
 
   /**
    * Callback for Electron.App "window-all-closed" event
+   * https://electronjs.org/docs/api/app#event-window-all-closed
    *
    * Quits the app unless current operative system is macOS, it doesn't quit apps
    * when all windows are closed
