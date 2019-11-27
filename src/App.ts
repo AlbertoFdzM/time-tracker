@@ -21,6 +21,8 @@ export class App {
     }
 
     Electron.app.on('ready', this.onReady.bind(this));
+
+    Electron.app.on('window-all-closed', this.onWindowAllClosed.bind(this));
   }
 
   /**
@@ -37,5 +39,18 @@ export class App {
     const window: Electron.BrowserWindow = new Electron.BrowserWindow(options);
 
     await window.loadFile(path.join(__dirname, '../index.html'));
+  }
+
+  /**
+   * Callback for Electron.App "window-all-closed" event
+   *
+   * Quits the app unless current operative system is macOS, it doesn't quit apps
+   * when all windows are closed
+   * https://nodejs.org/docs/latest-v12.x/api/process.html#process_process_platform
+   */
+  private onWindowAllClosed(): void {
+    if (process.platform !== 'darwin') {
+      Electron.app.quit();
+    }
   }
 }
