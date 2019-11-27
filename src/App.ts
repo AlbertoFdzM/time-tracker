@@ -7,6 +7,8 @@ import { AppConfig } from './AppConfig';
  * Main module for the project
  */
 export class App {
+  private mainWindow: Electron.BrowserWindow | null = null;
+
   constructor(private config: AppConfig) {}
 
   /**
@@ -36,9 +38,9 @@ export class App {
       }
     };
 
-    const window: Electron.BrowserWindow = new Electron.BrowserWindow(options);
+    this.mainWindow = new Electron.BrowserWindow(options);
 
-    await window.loadFile(path.join(__dirname, '../index.html'));
+    await this.mainWindow.loadFile(path.join(__dirname, '../index.html'));
   }
 
   /**
