@@ -24,6 +24,7 @@ export class App {
 
   /**
    * Callback for Electron.App "ready" event
+   * https://electronjs.org/docs/api/app#event-ready
    */
   private async onReady(): Promise<void> {
     const options: Electron.BrowserWindowConstructorOptions = {

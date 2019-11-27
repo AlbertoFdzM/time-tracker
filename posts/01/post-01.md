@@ -78,7 +78,8 @@ export class App {
   }
 
   /**
-   * Callback for Electron.App 'ready' event
+   * Callback for Electron.App "ready" event
+   * https://electronjs.org/docs/api/app#event-ready
    */
   private onReady(): void {
     new Electron.BrowserWindow();
