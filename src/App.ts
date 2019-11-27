@@ -25,6 +25,8 @@ export class App {
     Electron.app.on('ready', this.onReady.bind(this));
 
     Electron.app.on('window-all-closed', this.onWindowAllClosed.bind(this));
+
+    Electron.app.on('activate', this.onActivate.bind(this));
   }
 
   /**
@@ -54,6 +56,18 @@ export class App {
   private onWindowAllClosed(): void {
     if (process.platform !== 'darwin') {
       Electron.app.quit();
+    }
+  }
+
+  /**
+   * Callback for Electron.App "activate" event
+   * https://electronjs.org/docs/api/app#event-activate-macos
+   *
+   * Checks if there is a main window, if not, creates one
+   */
+  private onActivate(): void {
+    if (this.mainWindow === null) {
+      this.mainWindow = new Electron.BrowserWindow();
     }
   }
 }
