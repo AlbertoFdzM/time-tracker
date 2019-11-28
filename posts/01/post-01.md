@@ -7,7 +7,11 @@ This article is part of a [post series about developing apps with Electron and T
 
 The environment/machine needs to have installed [NodeJS](https://nodejs.org/) v12 or higher.
 
-Now in the project's directory (`~/develop/time-tracker`)
+The editor used for this articles is [VS Code](https://code.visualstudio.com/) and some sections will make use of its functionalities.
+
+### Project Setup
+
+In the project's directory (`~/develop/time-tracker`)
 
 Install [TypeScript](https://www.typescriptlang.org/):
 ```bash
@@ -93,7 +97,7 @@ Now to use this module a good practice is to have an executable Node script that
 ```typescript
 import { App } from './App';
 
-const app = new App();
+const app: App = new App();
 app.start();
 ```
 
@@ -153,7 +157,7 @@ import path from 'path'; // NodeJS path module
 export class App {
   // ...
   private async onReady(): Promise<void> {
-    const window = new Electron.BrowserWindow();
+    const window: Electron.BrowserWindow = new Electron.BrowserWindow();
 
     await window.loadFile(path.join(__dirname, '../index.html'));
   }
@@ -175,8 +179,11 @@ Update `App.onReady` method
 **`/src/App.ts`**
 ```typescript
 //...
+
 export class App {
+
   //...
+
   private async onReady(): Promise<void> {
     const options: Electron.BrowserWindowConstructorOptions = {
       webPreferences: {
@@ -184,7 +191,7 @@ export class App {
       }
     };
 
-    const window = new Electron.BrowserWindow(options);
+    const window: Electron.BrowserWindow = new Electron.BrowserWindow(options);
 
     await window.loadFile(path.join(__dirname, '../index.html'));
   }
@@ -221,7 +228,7 @@ There are some debugging tools for Electron ([`devtron`](https://github.com/elec
 npm i -D devtron electron-debug
 ```
 
-To activate this debugging tools some short of config object will be needed by `App` module:
+To activate this debugging tools some short of config will need to be passed to `App` module:
 **`/src/AppConfig.ts`**
 ```typescript
 /**
@@ -251,6 +258,7 @@ class App {
 
   public start(): void {
     if (this.config.isDebugEnabled) {
+      // https://www.typescriptlang.org/docs/handbook/modules.html#optional-module-loading-and-other-advanced-loading-scenarios
       const electronDebug: typeof ElectronDebug = require('electron-debug');
 
       electronDebug();
@@ -270,12 +278,12 @@ class App {
 import { App } from '../App';
 import { AppConfig } from '../AppConfig';
 
-const isDebugEnabled = process.env.DEBUG_ENABLED === 'true';
+const isDebugEnabled: boolean = process.env.DEBUG_ENABLED === 'true';
 const config: AppConfig = {
   isDebugEnabled
 };
 
-const app = new App(config);
+const app: App = new App(config);
 app.start();
 ```
 
@@ -295,6 +303,68 @@ Now the `start` script needs to receive this value through environment variables
 
 When `electron-debug` is activated will detect `devtron` and activates it too. Now when the Electron app starts, it will have the devtools panel open and a "Devtron" tab in it:
 ![Electron App with devtools open using Devtron](./img/04-electron-app-with-devtools-open-using-devtron.png)
+
+### Debugging Electron in TypeScript with VS Code
+
+To use [VS Code debugging functionality](https://code.visualstudio.com/docs/editor/debugging) first the project needs to configure the NPM build script to be used by [VS Code tasks](https://code.visualstudio.com/docs/editor/tasks).
+
+**`/.vscode/tasks.json`**
+```json
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558 
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "build",
+      "problemMatcher": [
+        "$tsc"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
+```
+
+To check if the task works, with VS Code open press <kbd>Cmd</kbd>/<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd>, VS Code should open a terminal with the build output.
+
+Next a [VS Code launch file](https://code.visualstudio.com/docs/nodejs/nodejs-debugging) needs to be configured.
+
+**`/.vscode/launch.json`**
+```json
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+      "preLaunchTask": "${defaultBuildTask}",
+      "program": "${workspaceFolder}/dist/bin/start.js",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ],
+      "env": {
+        "DEBUG_ENABLED": true
+      }
+    }
+  ]
+}
+```
+
+When pressing <kbd>F5</kbd> the Electron app should start with inspection mode, and debugging tools enabled.
 
 
 ## Closure

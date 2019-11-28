@@ -14,6 +14,7 @@ export class App {
    */
   public start(): void {
     if (this.config.isDebugEnabled) {
+      // https://www.typescriptlang.org/docs/handbook/modules.html#optional-module-loading-and-other-advanced-loading-scenarios
       const electronDebug: typeof ElectronDebug = require('electron-debug');
 
       electronDebug();
@@ -33,7 +34,7 @@ export class App {
       }
     };
 
-    const window = new Electron.BrowserWindow(options);
+    const window: Electron.BrowserWindow = new Electron.BrowserWindow(options);
 
     await window.loadFile(path.join(__dirname, '../index.html'));
   }
