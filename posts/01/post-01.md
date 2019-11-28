@@ -22,7 +22,7 @@ npm i -D typescript
 Create a [TypeScript config file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
 **`/tsconfig.json`**
-```json
+```jsonc
 {
   "compilerOptions": {
     "incremental": true,
@@ -102,9 +102,9 @@ app.start();
 ```
 
 Update package with build and start scripts.
- 
+
 **`/package.json`**
-```json
+```jsonc
 {
   // ...
   "main": "dist/bin/start.js",
@@ -289,7 +289,7 @@ app.start();
 
 Now the `start` script needs to receive this value through environment variables.
 **`/package.json`**
-```json
+```jsonc
 {
   // ...
   "scripts": {
@@ -309,7 +309,7 @@ When `electron-debug` is activated will detect `devtron` and activates it too. N
 To use [VS Code debugging functionality](https://code.visualstudio.com/docs/editor/debugging) first the project needs to configure the NPM build script to be used by [VS Code tasks](https://code.visualstudio.com/docs/editor/tasks).
 
 **`/.vscode/tasks.json`**
-```json
+```jsonc
 {
   // See https://go.microsoft.com/fwlink/?LinkId=733558 
   // for the documentation about the tasks.json format
@@ -335,7 +335,7 @@ To check if the task works, with VS Code open press <kbd>Cmd</kbd>/<kbd>Ctrl</kb
 Next a [VS Code launch file](https://code.visualstudio.com/docs/nodejs/nodejs-debugging) needs to be configured.
 
 **`/.vscode/launch.json`**
-```json
+```jsonc
 {
   // Use IntelliSense to learn about possible attributes.
   // Hover to view descriptions of existing attributes.
