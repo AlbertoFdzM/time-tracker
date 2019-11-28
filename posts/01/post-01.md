@@ -148,6 +148,7 @@ Create a basic HTML file:
 ```
 
 Update `App` imports and `App.onReady` method:
+
 **`/src/App.ts`**
 ```typescript
 import Electron from 'electron';
@@ -176,6 +177,7 @@ Should appear something like this:
 In order to have integration with Node APIs, Electron's window needs to receive some options.
 
 Update `App.onReady` method
+
 **`/src/App.ts`**
 ```typescript
 //...
@@ -229,6 +231,7 @@ npm i -D devtron electron-debug
 ```
 
 To activate this debugging tools some short of config will need to be passed to `App` module:
+
 **`/src/AppConfig.ts`**
 ```typescript
 /**
@@ -273,6 +276,7 @@ class App {
 ```
 
 `AppConfig` can be created before instantiating the `App` module in the `start` script:
+
 **`/src/bin/start.ts`**
 ```typescript
 import { App } from '../App';
@@ -288,6 +292,7 @@ app.start();
 ```
 
 Now the `start` script needs to receive this value through environment variables.
+
 **`/package.json`**
 ```jsonc
 {
