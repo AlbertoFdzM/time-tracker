@@ -1,6 +1,6 @@
 # Build an App with Electron and TypeScript - Getting Started
 
-This article is part of a [post series about developing apps with Electron and TypeScript](https://github.com/AlbertoFdzM/time-tracker) and covers how to start a project, first steps and how to enable debugging.
+This article covers how to start a project to develop with Electron and TypeScript, first steps with Electron apps and how to debug an Electron app. This is part of a [post series about developing apps with Electron and TypeScript](https://github.com/AlbertoFdzM/time-tracker).
 
 
 ## Requirements
